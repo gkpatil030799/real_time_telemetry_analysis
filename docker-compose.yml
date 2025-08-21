@@ -49,6 +49,9 @@ services:
       - POSTGRES_DB=energy
     ports:
       - "5432:5432"
+    volumes:
+      - ./sql:/workspace/sql      # <--- mount host ./sql into container
+      - tsdata:/var/lib/postgresql/data
 
   grafana:
     image: grafana/grafana:latest
@@ -60,3 +63,5 @@ services:
       - "3000:3000"
     depends_on:
       - timescaledb
+volumes:
+  tsdata:
