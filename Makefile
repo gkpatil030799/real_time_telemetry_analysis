@@ -47,4 +47,14 @@ producer:
 	KAFKA_BOOTSTRAP=$(HOST_BOOT) TOPIC=$(TOPIC) RATE=5 .venv/bin/python producers/producer_power.py
 
 consumer:
-	KAFKA_BOOTSTRAP=$(HOST_BOOT) TOPIC=$(TOPIC) GROUP=toy-consumer .venv/bin/python producers/consumer_toy.py
+	KAFKA_BOOTSTRAP=$(HOST_BOOT) TOPIC=$(TOPIC) GROUP=toy-consumer .venv/bin/python consumers/consumer_toy.py
+
+# Phase 2 helpers
+sql-phase2:
+	cat sql/phase2_timescale.sql | docker compose exec -T timescaledb psql -U postgres -d energy -v ON_ERROR_STOP=1
+
+spark-power:
+	 JAVA_TOOL_OPTIONS="-Djavax.net.ssl.trustStoreType=Windows-ROOT" \
+	 SPARK_CHECKPOINT=./checkpoints/power_bronze \
+	 .venv/bin/python spark/stream_power_to_bronze.py
+

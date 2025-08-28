@@ -48,7 +48,7 @@
 1. Run `make up` and `make create-topic`.
 2. Start producer (`make producer`) and consumer (`make consumer`) in separate terminals.
 3. Check partition offsets and lag via:
- - Kafka UI (Topics → telemetry.power)
+ - Kafka UI (Topics → telemetrya.power)
  - `make lag` CLI
 4. Scale partitions to 6 with `make alter-6`, observe redistribution in consumer output.
 5. Interview nugget:  
